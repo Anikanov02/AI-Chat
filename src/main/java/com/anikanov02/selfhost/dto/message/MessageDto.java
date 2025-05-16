@@ -1,4 +1,4 @@
-package com.anikanov02.selfhost.dto;
+package com.anikanov02.selfhost.dto.message;
 
 import lombok.Getter;
 import lombok.Setter;

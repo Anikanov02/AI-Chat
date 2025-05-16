@@ -1,6 +1,6 @@
 package com.anikanov02.selfhost.util.mapper;
 
-import com.anikanov02.selfhost.dto.ChatDto;
+import com.anikanov02.selfhost.dto.chat.ChatDto;
 import com.anikanov02.selfhost.model.Chat;
 import org.mapstruct.Mapper;
 

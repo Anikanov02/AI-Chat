@@ -1,6 +1,6 @@
 package com.anikanov02.selfhost.controller;
 
-import com.anikanov02.selfhost.dto.ChatDto;
+import com.anikanov02.selfhost.dto.chat.ChatDto;
 import com.anikanov02.selfhost.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

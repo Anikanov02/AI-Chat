@@ -1,6 +1,6 @@
 package com.anikanov02.selfhost.controller;
 
-import com.anikanov02.selfhost.dto.UserDto;
+import com.anikanov02.selfhost.dto.user.UserDto;
 import com.anikanov02.selfhost.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

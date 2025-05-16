@@ -1,6 +1,6 @@
 package com.anikanov02.selfhost.util.mapper;
 
-import com.anikanov02.selfhost.dto.UserDto;
+import com.anikanov02.selfhost.dto.user.UserDto;
 import com.anikanov02.selfhost.model.User;
 import org.mapstruct.Mapper;
 
