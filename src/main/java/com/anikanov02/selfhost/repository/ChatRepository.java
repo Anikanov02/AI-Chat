@@ -1,6 +1,6 @@
 package com.anikanov02.selfhost.repository;
 
-import com.anikanov02.selfhost.model.Chat;
+import com.anikanov02.selfhost.domain.model.Chat;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

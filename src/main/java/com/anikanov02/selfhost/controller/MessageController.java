@@ -1,6 +1,6 @@
 package com.anikanov02.selfhost.controller;
 
-import com.anikanov02.selfhost.dto.message.MessageDto;
+import com.anikanov02.selfhost.domain.dto.message.MessageDto;
 import com.anikanov02.selfhost.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

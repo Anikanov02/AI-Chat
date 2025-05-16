@@ -1,11 +1,13 @@
 package com.anikanov02.selfhost.util.mapper;
 
-import com.anikanov02.selfhost.dto.user.UserDto;
-import com.anikanov02.selfhost.model.User;
+import com.anikanov02.selfhost.domain.dto.user.UserBaseDto;
+import com.anikanov02.selfhost.domain.dto.user.UserDto;
+import com.anikanov02.selfhost.domain.model.User;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface UserMapper {
-    User toEntity(UserDto dto);
+    User toEntity(UserBaseDto dto);
     UserDto toDto(User user);
+    void updateUser(User user, UserBaseDto userBaseDto);
 }
