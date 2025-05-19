@@ -5,13 +5,11 @@ import com.anikanov02.selfhost.domain.dto.message.MessageDto;
 import com.anikanov02.selfhost.domain.dto.message.MessagesPaginatedRequest;
 import com.anikanov02.selfhost.domain.model.Chat;
 import com.anikanov02.selfhost.domain.model.Message;
-import com.anikanov02.selfhost.domain.model.User;
 import com.anikanov02.selfhost.repository.MessageRepository;
 import com.anikanov02.selfhost.util.mapper.MessageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -28,9 +26,9 @@ public class MessageService {
                 .orElseThrow(() -> new RuntimeException("Cant find message with id: " + uuid));
     }
 
-    public Page<Message> getMessages(MessagesPaginatedRequest request) {
+    public Page<MessageDto> getMessages(MessagesPaginatedRequest request) {
         final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
-        return messageRepository.findAll(pageRequest);
+        return messageRepository.findAll(pageRequest).map(messageMapper::toDto);
     }
 
     public MessageDto getMessage(UUID uuid) {

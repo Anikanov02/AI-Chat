@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -40,6 +41,12 @@ public class GlobalExceptionHandler extends BaseExceptionHandling {
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<Problem> handleException(HttpClientErrorException ex, HttpServletRequest request) {
         final Problem problem = buildProblem(request.getRequestURI(), Status.valueOf(ex.getStatusCode().value()), ex);
+        return ResponseEntity.status(Objects.requireNonNull(problem.getStatus()).getStatusCode()).body(problem);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Problem> handleException(BadCredentialsException ex, HttpServletRequest request) {
+        final Problem problem = buildProblem(request.getRequestURI(), Status.FORBIDDEN, ex);
         return ResponseEntity.status(Objects.requireNonNull(problem.getStatus()).getStatusCode()).body(problem);
     }
 

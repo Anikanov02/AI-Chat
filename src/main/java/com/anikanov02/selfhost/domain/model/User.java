@@ -1,6 +1,7 @@
 package com.anikanov02.selfhost.domain.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,8 @@ public class User extends BaseEntity {
     private String firstName;
     @Column(name = "last_name", length = 40)
     private String lastName;
-    private String login;
+    @Column(unique = true)
+    private String email;
     private String password;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private List<Chat> chats;

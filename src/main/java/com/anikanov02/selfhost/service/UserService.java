@@ -2,11 +2,13 @@ package com.anikanov02.selfhost.service;
 
 import com.anikanov02.selfhost.domain.dto.user.UserBaseDto;
 import com.anikanov02.selfhost.domain.dto.user.UserDto;
-import com.anikanov02.selfhost.domain.model.Chat;
+import com.anikanov02.selfhost.domain.dto.user.UserSignupRequest;
 import com.anikanov02.selfhost.domain.model.User;
 import com.anikanov02.selfhost.repository.UserRepository;
 import com.anikanov02.selfhost.util.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -22,12 +24,21 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Cant find user with id: " + uuid));
     }
 
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Cant find user with email: " + email));
+    }
+
     public UserDto getUser(UUID uuid) {
         return userMapper.toDto(getById(uuid));
     }
 
-    public UserDto createUser() {
+    public UserDto getUser(String email) {
+        return userMapper.toDto(getByEmail(email));
+    }
 
+    public UserDto createUser(UserSignupRequest request) {
+        return userMapper.toDto(userRepository.save(userMapper.toEntity(request)));
     }
 
     public UserDto updateUser(UUID id, UserBaseDto dto) {
@@ -38,5 +49,10 @@ public class UserService {
 
     public void deleteUser(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    public User getCurrentUser() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return getByEmail(authentication.getName());
     }
 }

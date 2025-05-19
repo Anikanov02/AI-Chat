@@ -24,9 +24,9 @@ public class ChatService {
                 .orElseThrow(() -> new RuntimeException("Cant find chat with id: " + id));
     }
 
-    public Page<Chat> getChats(ChatsPaginatedRequest request) {
+    public Page<ChatDto> getChats(ChatsPaginatedRequest request) {
         final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
-        return chatRepository.findAll(pageRequest);
+        return chatRepository.findAll(pageRequest).map(chatMapper::toDto);
     }
 
     public ChatDto getChat(UUID id) {
