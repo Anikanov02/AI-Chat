@@ -1,4 +1,4 @@
-package com.anikanov02.selfhost.domain.model;
+package com.anikanov02.selfhost.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

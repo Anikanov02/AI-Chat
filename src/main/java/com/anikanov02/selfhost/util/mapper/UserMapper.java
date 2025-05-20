@@ -3,7 +3,7 @@ package com.anikanov02.selfhost.util.mapper;
 import com.anikanov02.selfhost.domain.dto.user.UserBaseDto;
 import com.anikanov02.selfhost.domain.dto.user.UserDto;
 import com.anikanov02.selfhost.domain.dto.user.UserSignupRequest;
-import com.anikanov02.selfhost.domain.model.User;
+import com.anikanov02.selfhost.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,6 @@
 package com.anikanov02.selfhost.repository;
 
-import com.anikanov02.selfhost.domain.model.User;
+import com.anikanov02.selfhost.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,11 +1,10 @@
 package com.anikanov02.selfhost.service;
 
-import com.anikanov02.selfhost.domain.model.User;
+import com.anikanov02.selfhost.domain.entity.User;
 import com.anikanov02.selfhost.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

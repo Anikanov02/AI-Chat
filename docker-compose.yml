@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  server-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ollama
+
+  ollama:
+    build:
+      context: model-providers/ollama
+      dockerfile: Dockerfile
+    container_name: ollaa
+    ports:
+      - "11434:11434"

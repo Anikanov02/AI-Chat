@@ -3,9 +3,10 @@ package com.anikanov02.selfhost.service;
 import com.anikanov02.selfhost.domain.dto.user.UserBaseDto;
 import com.anikanov02.selfhost.domain.dto.user.UserDto;
 import com.anikanov02.selfhost.domain.dto.user.UserSignupRequest;
-import com.anikanov02.selfhost.domain.model.User;
+import com.anikanov02.selfhost.domain.entity.User;
 import com.anikanov02.selfhost.repository.UserRepository;
 import com.anikanov02.selfhost.util.mapper.UserMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,10 +38,12 @@ public class UserService {
         return userMapper.toDto(getByEmail(email));
     }
 
+    @Transactional
     public UserDto createUser(UserSignupRequest request) {
         return userMapper.toDto(userRepository.save(userMapper.toEntity(request)));
     }
 
+    @Transactional
     public UserDto updateUser(UUID id, UserBaseDto dto) {
         final User user = getById(id);
         userMapper.updateUser(getById(id), dto);

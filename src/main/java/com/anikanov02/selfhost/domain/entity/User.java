@@ -1,7 +1,6 @@
-package com.anikanov02.selfhost.domain.model;
+package com.anikanov02.selfhost.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

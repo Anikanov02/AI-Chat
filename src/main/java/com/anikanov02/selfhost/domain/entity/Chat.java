@@ -1,4 +1,4 @@
-package com.anikanov02.selfhost.domain.model;
+package com.anikanov02.selfhost.domain.entity;
 
 import com.anikanov02.selfhost.domain.Model;
 import jakarta.persistence.*;

@@ -1,0 +1,8 @@
+spring:
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL}
+
+app:
+  model-provider: OLLAMA
+  frontendBaseUrl: http://localhost:4200

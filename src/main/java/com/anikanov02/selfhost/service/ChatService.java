@@ -3,9 +3,10 @@ package com.anikanov02.selfhost.service;
 import com.anikanov02.selfhost.domain.dto.chat.ChatBaseDto;
 import com.anikanov02.selfhost.domain.dto.chat.ChatDto;
 import com.anikanov02.selfhost.domain.dto.chat.ChatsPaginatedRequest;
-import com.anikanov02.selfhost.domain.model.Chat;
+import com.anikanov02.selfhost.domain.entity.Chat;
 import com.anikanov02.selfhost.repository.ChatRepository;
 import com.anikanov02.selfhost.util.mapper.ChatMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,10 +34,12 @@ public class ChatService {
         return chatMapper.toDto(getById(id));
     }
 
+    @Transactional
     public ChatDto createChat(ChatBaseDto dto) {
         return chatMapper.toDto(chatRepository.save(chatMapper.toEntity(dto)));
     }
 
+    @Transactional
     public ChatDto updateChat(UUID id, ChatBaseDto dto) {
         final Chat chat = getById(id);
         chatMapper.updateChat(getById(id), dto);
