@@ -51,11 +51,11 @@ public class SecurityConfig {
         http
                 .cors(withDefaults())
                 .csrf(CsrfConfigurer::disable)//TODO use
-                //TODO here was user details service .userDetailsService(service)
+//                .userDetailsService(service)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/v1/auth/sign-in",
                                 "/logout",
-                                "/api/v1/auth/signup",
+                                "/api/v1/auth/sign-up",
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
                                 "/swagger-ui.html",

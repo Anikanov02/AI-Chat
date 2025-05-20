@@ -4,16 +4,16 @@ import com.anikanov02.selfhost.domain.dto.user.UserBaseDto;
 import com.anikanov02.selfhost.domain.dto.user.UserDto;
 import com.anikanov02.selfhost.domain.dto.user.UserSignupRequest;
 import com.anikanov02.selfhost.domain.entity.User;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Mapper
-@RequiredArgsConstructor
 public abstract class UserMapper {
+    @Autowired
     protected PasswordEncoder passwordEncoder;
 
     public abstract User toEntity(UserBaseDto dto);

@@ -22,18 +22,18 @@ public class AuthController {
     private final UserService userService;
     private final SecurityService securityService;
 
-    @PostMapping("/sing-in")
+    @PostMapping("/sign-in")
     public ResponseEntity<UserDto> signIn(@RequestBody @Valid UserLoginRequest request) {
         securityService.login(request.getLogin(), request.getPassword());
         log.info("logged new user: " + request.getLogin());
         return ResponseEntity.ok(userService.getUser(request.getLogin()));
     }
 
-    @PostMapping("/sing-up")
+    @PostMapping("/sign-up")
     public ResponseEntity<?> signup(@RequestBody @Valid UserSignupRequest request) {
-        final UserDto user = userService.createUser(request);
+        final UserDto userDto = userService.createUser(request);
         log.debug("registered new user: " + request.getEmail());
         securityService.login(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userDto);
     }
 }
