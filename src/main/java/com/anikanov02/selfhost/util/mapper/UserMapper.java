@@ -7,6 +7,7 @@ import com.anikanov02.selfhost.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -22,7 +23,7 @@ public abstract class UserMapper {
 
     public abstract UserDto toDto(User user);
 
-    public abstract void updateUser(User user, UserBaseDto userBaseDto);
+    public abstract void updateUser(@MappingTarget User user, UserBaseDto userBaseDto);
 
     @Named("encodePassword")
     public String encodePassword(String rawPassword) {

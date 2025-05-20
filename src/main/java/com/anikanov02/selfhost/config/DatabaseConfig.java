@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EntityScan("com.anikanov02.selfhost.domain.model")
+@EntityScan("com.anikanov02.selfhost.domain.entity")
 @EnableJpaRepositories("com.anikanov02.selfhost.repository")
 @EnableJpaAuditing
 public class DatabaseConfig {

@@ -1,0 +1,157 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1747770327253-1
+      author: anika (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: chatsPK
+                  name: id
+                  type: UUID
+              - column:
+                  name: created_at
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updated_by
+                  type: VARCHAR(255)
+              - column:
+                  name: model
+                  type: VARCHAR(255)
+              - column:
+                  name: title
+                  type: VARCHAR(20)
+              - column:
+                  name: user_id
+                  type: UUID
+            tableName: chats
+  - changeSet:
+      id: 1747770327253-2
+      author: anika (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: messagesPK
+                  name: id
+                  type: UUID
+              - column:
+                  name: created_at
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updated_by
+                  type: VARCHAR(255)
+              - column:
+                  name: text
+                  type: VARCHAR(5000)
+              - column:
+                  name: chat_id
+                  type: UUID
+              - column:
+                  name: user_id
+                  type: UUID
+            tableName: messages
+  - changeSet:
+      id: 1747770327253-3
+      author: anika (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: usersPK
+                  name: id
+                  type: UUID
+              - column:
+                  name: created_at
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: updated_by
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: first_name
+                  type: VARCHAR(40)
+              - column:
+                  name: last_name
+                  type: VARCHAR(40)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+            tableName: users
+  - changeSet:
+      id: 1747770327253-4
+      author: anika (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: UC_USERSEMAIL_COL
+            tableName: users
+  - changeSet:
+      id: 1747770327253-5
+      author: anika (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: chat_id
+            baseTableName: messages
+            constraintName: FK64w44ngcpqp99ptcb9werdfmb
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: chats
+            validate: true
+  - changeSet:
+      id: 1747770327253-6
+      author: anika (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: chats
+            constraintName: FKmolqi1xj49bg3jjr33674limy
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+  - changeSet:
+      id: 1747770327253-7
+      author: anika (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: messages
+            constraintName: FKpsmh6clh3csorw43eaodlqvkn
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+

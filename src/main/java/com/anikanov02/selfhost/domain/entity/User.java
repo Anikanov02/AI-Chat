@@ -12,6 +12,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class User extends BaseEntity {
+    @Id
+    @GeneratedValue
     private UUID id;
     @Column(name = "first_name", length = 40)
     private String firstName;

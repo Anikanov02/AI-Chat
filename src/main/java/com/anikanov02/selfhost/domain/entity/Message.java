@@ -1,9 +1,6 @@
 package com.anikanov02.selfhost.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +11,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Message extends BaseEntity {
+    @Id
+    @GeneratedValue
     private UUID id;
     @Column(length = 5000)
     private String text;
