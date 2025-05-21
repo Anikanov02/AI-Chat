@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,6 +22,9 @@ import org.zalando.problem.spring.web.autoconfigure.ProblemAutoConfiguration;
 
 import java.util.Objects;
 
+/** TODO
+ * Improve handling, need to add 401 403 distinction
+ */
 @RestControllerAdvice
 @ConditionalOnClass({ProblemHandling.class})
 @AutoConfigureBefore({ProblemAutoConfiguration.class})
@@ -44,8 +48,14 @@ public class GlobalExceptionHandler extends BaseExceptionHandling {
         return ResponseEntity.status(Objects.requireNonNull(problem.getStatus()).getStatusCode()).body(problem);
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
+    @ExceptionHandler({BadCredentialsException.class})
     public ResponseEntity<Problem> handleException(BadCredentialsException ex, HttpServletRequest request) {
+        final Problem problem = buildProblem(request.getRequestURI(), Status.UNAUTHORIZED, ex);
+        return ResponseEntity.status(Objects.requireNonNull(problem.getStatus()).getStatusCode()).body(problem);
+    }
+
+    @ExceptionHandler({InsufficientAuthenticationException.class})
+    public ResponseEntity<Problem> handleException(InsufficientAuthenticationException ex, HttpServletRequest request) {
         final Problem problem = buildProblem(request.getRequestURI(), Status.FORBIDDEN, ex);
         return ResponseEntity.status(Objects.requireNonNull(problem.getStatus()).getStatusCode()).body(problem);
     }

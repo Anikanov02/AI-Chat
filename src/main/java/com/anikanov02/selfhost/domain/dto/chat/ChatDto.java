@@ -7,6 +7,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class ChatDto {
+public class ChatDto extends ChatBaseDto {
     private UUID id;
 }

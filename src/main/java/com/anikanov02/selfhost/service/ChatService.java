@@ -19,6 +19,7 @@ import java.util.UUID;
 public class ChatService {
     private final ChatRepository chatRepository;
     private final ChatMapper chatMapper;
+    private final UserService userService;
 
     public Chat getById(UUID id) {
         return chatRepository.findById(id)
@@ -36,7 +37,7 @@ public class ChatService {
 
     @Transactional
     public ChatDto createChat(ChatBaseDto dto) {
-        return chatMapper.toDto(chatRepository.save(chatMapper.toEntity(dto)));
+        return chatMapper.toDto(chatRepository.save(chatMapper.toEntity(dto, userService.getCurrentUser())));
     }
 
     @Transactional
@@ -47,6 +48,6 @@ public class ChatService {
     }
 
     public void deleteChat(UUID id) {
-        chatRepository.findById(id);
+        chatRepository.deleteById(id);
     }
 }

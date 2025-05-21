@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable UUID id, @RequestBody @Valid UserBaseDto request) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable UUID id, @RequestBody @Valid UserBaseDto request) {
         if (permissionService.canModifyUser(id)) {
             return ResponseEntity.ok(userService.updateUser(id, request));
         }
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         if (permissionService.canModifyUser(id)) {
             userService.deleteUser(id);
             return ResponseEntity.ok().build();

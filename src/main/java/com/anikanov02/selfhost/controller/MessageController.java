@@ -23,7 +23,7 @@ public class MessageController {
     private final UserPermissionService permissionService;
 
     @GetMapping
-    public ResponseEntity<Page<MessageDto>> getMessages(MessagesPaginatedRequest request) {
+    public ResponseEntity<Page<MessageDto>> getMessages(@Valid MessagesPaginatedRequest request) {
         return ResponseEntity.ok(messageService.getMessages(request));
     }
 

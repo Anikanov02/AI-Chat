@@ -23,7 +23,7 @@ public class ChatController {
     private final UserPermissionService permissionService;
     
     @GetMapping
-    public ResponseEntity<Page<ChatDto>> getChats(ChatsPaginatedRequest request) {
+    public ResponseEntity<Page<ChatDto>> getChats(@Valid ChatsPaginatedRequest request) {
         return ResponseEntity.ok(chatService.getChats(request));
     }
 

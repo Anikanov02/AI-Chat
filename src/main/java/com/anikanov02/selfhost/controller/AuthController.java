@@ -23,7 +23,7 @@ public class AuthController {
     private final SecurityService securityService;
 
     @PostMapping("/sign-in")
-    public ResponseEntity<UserDto> signIn(@RequestBody @Valid UserLoginRequest request) {
+    public ResponseEntity<?> signIn(@RequestBody @Valid UserLoginRequest request) {
         securityService.login(request.getLogin(), request.getPassword());
         log.info("logged new user: " + request.getLogin());
         return ResponseEntity.ok(userService.getUser(request.getLogin()));
