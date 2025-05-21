@@ -4,12 +4,16 @@ import com.anikanov02.selfhost.domain.dto.chat.ChatBaseDto;
 import com.anikanov02.selfhost.domain.dto.chat.ChatDto;
 import com.anikanov02.selfhost.domain.dto.chat.ChatsPaginatedRequest;
 import com.anikanov02.selfhost.domain.entity.Chat;
+import com.anikanov02.selfhost.domain.entity.User;
 import com.anikanov02.selfhost.repository.ChatRepository;
 import com.anikanov02.selfhost.util.mapper.ChatMapper;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -28,7 +32,19 @@ public class ChatService {
 
     public Page<ChatDto> getChats(ChatsPaginatedRequest request) {
         final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
-        return chatRepository.findAll(pageRequest).map(chatMapper::toDto);
+
+        final Specification<Chat> spec = (root, query, cb) -> {
+            Predicate predicate = cb.conjunction();
+
+            if (request.getUserId() != null) {
+                final Join<Chat, User> userJoin = root.join("user");
+                predicate = cb.and(predicate, cb.equal(userJoin.get("id"), request.getUserId()));
+            }
+
+            return predicate;
+        };
+
+        return chatRepository.findAll(spec, pageRequest).map(chatMapper::toDto);
     }
 
     public ChatDto getChat(UUID id) {

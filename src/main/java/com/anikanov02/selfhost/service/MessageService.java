@@ -9,10 +9,13 @@ import com.anikanov02.selfhost.domain.entity.Chat;
 import com.anikanov02.selfhost.domain.entity.Message;
 import com.anikanov02.selfhost.repository.MessageRepository;
 import com.anikanov02.selfhost.util.mapper.MessageMapper;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -32,7 +35,19 @@ public class MessageService {
 
     public Page<MessageDto> getMessages(MessagesPaginatedRequest request) {
         final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
-        return messageRepository.findAll(pageRequest).map(messageMapper::toDto);
+
+        final Specification<Message> spec = (root, query, cb) -> {
+            Predicate predicate = cb.conjunction();
+
+            if (request.getChatId() != null) {
+                final Join<Message, Chat> chatJoin = root.join("chat");
+                predicate = cb.and(predicate, cb.equal(chatJoin.get("id"), request.getChatId()));
+            }
+
+            return predicate;
+        };
+
+        return messageRepository.findAll(spec, pageRequest).map(messageMapper::toDto);
     }
 
     public MessageDto getMessage(UUID uuid) {

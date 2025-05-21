@@ -24,7 +24,10 @@ public class MessageController {
 
     @GetMapping
     public ResponseEntity<Page<MessageDto>> getMessages(@Valid MessagesPaginatedRequest request) {
-        return ResponseEntity.ok(messageService.getMessages(request));
+        if (permissionService.ownsChat(request.getChatId())) {
+            return ResponseEntity.ok(messageService.getMessages(request));
+        }
+        throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "You are not allowed to operate this chat");
     }
 
     @GetMapping("/{id}")

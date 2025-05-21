@@ -17,3 +17,8 @@ services:
     container_name: ollama
     ports:
       - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+
+volumes:
+  ollama-models:

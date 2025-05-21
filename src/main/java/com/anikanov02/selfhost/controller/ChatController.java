@@ -24,7 +24,11 @@ public class ChatController {
     
     @GetMapping
     public ResponseEntity<Page<ChatDto>> getChats(@Valid ChatsPaginatedRequest request) {
-        return ResponseEntity.ok(chatService.getChats(request));
+        if (permissionService.canModifyUser(request.getUserId())) {
+            return ResponseEntity.ok(chatService.getChats(request));
+        }
+
+        throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "You are not allowed to operate this user");
     }
 
     @GetMapping("/{id}")
