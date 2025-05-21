@@ -20,7 +20,6 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final PasswordEncoder passwordEncoder;
 
     public User getById(UUID uuid) {
         return userRepository.findById(uuid)

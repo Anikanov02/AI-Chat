@@ -1,7 +1,11 @@
 FROM ollama/ollama
 
-RUN ollama run deepseek-coder && \
-    ollama run deepseek-v3 && \
-    ollama run deepseek-r1
+# Install curl for checking server status
+RUN apt-get update && apt-get install -y curl
 
-CMD ["ollama", "serve"]
+# Copy the startup script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Override the default ENTRYPOINT
+ENTRYPOINT ["/entrypoint.sh"]
