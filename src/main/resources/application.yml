@@ -19,14 +19,9 @@ spring:
 management:
   endpoints:
     web:
+      base-path: /
       exposure:
         include: health
 
-springdocs:
-  api-docs:
-    path: /swagger/api-doc/swagger
-  swagger-ui:
-    path: /swagger/ui
-
 app:
-  frontendBaseUrl: http://localhost:4200
+  frontendBaseUrl: ${FRONTEND_BASE_URL}

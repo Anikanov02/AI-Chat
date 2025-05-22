@@ -1,0 +1,553 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/v1/users/{id}:
+    get:
+      tags:
+      - user-controller
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+    put:
+      tags:
+      - user-controller
+      operationId: updateUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserBaseDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+    delete:
+      tags:
+      - user-controller
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+  /api/v1/messages/{id}:
+    get:
+      tags:
+      - message-controller
+      operationId: getMessage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageDto"
+    put:
+      tags:
+      - message-controller
+      operationId: updateMessage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageBaseDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+    delete:
+      tags:
+      - message-controller
+      operationId: deleteMessage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/v1/chats/{id}:
+    get:
+      tags:
+      - chat-controller
+      operationId: getChat
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatDto"
+    put:
+      tags:
+      - chat-controller
+      operationId: updateChat
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatBaseDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatDto"
+    delete:
+      tags:
+      - chat-controller
+      operationId: deleteChat
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+  /api/v1/messages:
+    get:
+      tags:
+      - message-controller
+      operationId: getMessages
+      parameters:
+      - name: request
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/MessagesPaginatedRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageMessageDto"
+    post:
+      tags:
+      - message-controller
+      operationId: createMessage
+      parameters:
+      - name: chatId
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageBaseDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/v1/chats:
+    get:
+      tags:
+      - chat-controller
+      operationId: getChats
+      parameters:
+      - name: request
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/ChatsPaginatedRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageChatDto"
+    post:
+      tags:
+      - chat-controller
+      operationId: createChat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatBaseDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatDto"
+  /api/v1/auth/sign-up:
+    post:
+      tags:
+      - auth-controller
+      operationId: signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSignupRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/v1/auth/sign-in:
+    post:
+      tags:
+      - auth-controller
+      operationId: signIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    UserBaseDto:
+      required:
+      - first_name
+      - last_name
+      type: object
+      properties:
+        first_name:
+          maxLength: 40
+          minLength: 0
+          type: string
+        last_name:
+          maxLength: 40
+          minLength: 0
+          type: string
+    UserDto:
+      required:
+      - first_name
+      - last_name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        first_name:
+          maxLength: 40
+          minLength: 0
+          type: string
+        last_name:
+          maxLength: 40
+          minLength: 0
+          type: string
+    MessageBaseDto:
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          maxLength: 5000
+          minLength: 0
+          type: string
+    ChatBaseDto:
+      required:
+      - title
+      type: object
+      properties:
+        title:
+          maxLength: 20
+          minLength: 0
+          type: string
+        model:
+          type: string
+          enum:
+          - DEEPSEEK_CODER
+          - DEEPSEEK_V3
+          - DEEPSEEK_R1
+    ChatDto:
+      required:
+      - title
+      type: object
+      properties:
+        title:
+          maxLength: 20
+          minLength: 0
+          type: string
+        model:
+          type: string
+          enum:
+          - DEEPSEEK_CODER
+          - DEEPSEEK_V3
+          - DEEPSEEK_R1
+        id:
+          type: string
+          format: uuid
+    UserSignupRequest:
+      required:
+      - email
+      - first_name
+      - last_name
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          maxLength: 32
+          minLength: 8
+          type: string
+        first_name:
+          maxLength: 40
+          minLength: 0
+          type: string
+        last_name:
+          maxLength: 40
+          minLength: 0
+          type: string
+    UserLoginRequest:
+      required:
+      - login
+      - password
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    MessagesPaginatedRequest:
+      required:
+      - chatId
+      - page
+      - size
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          maximum: 100
+          minimum: 1
+          type: integer
+          format: int32
+        chatId:
+          type: string
+          format: uuid
+    MessageDto:
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          maxLength: 5000
+          minLength: 0
+          type: string
+        id:
+          type: string
+          format: uuid
+    PageMessageDto:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/MessageDto"
+        number:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: "#/components/schemas/SortObject"
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          type: array
+          items:
+            $ref: "#/components/schemas/SortObject"
+        pageSize:
+          type: integer
+          format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    SortObject:
+      type: object
+      properties:
+        direction:
+          type: string
+        nullHandling:
+          type: string
+        ascending:
+          type: boolean
+        property:
+          type: string
+        ignoreCase:
+          type: boolean
+    ChatsPaginatedRequest:
+      required:
+      - page
+      - size
+      - userId
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          maximum: 100
+          minimum: 1
+          type: integer
+          format: int32
+        userId:
+          type: string
+          format: uuid
+    PageChatDto:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatDto"
+        number:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            $ref: "#/components/schemas/SortObject"
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        empty:
+          type: boolean
