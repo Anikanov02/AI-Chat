@@ -5,7 +5,7 @@ import com.anikanov02.selfhost.domain.dto.model.ModelResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class ModelCommunicationService {
         final Prompt prompt = new Prompt(request.getInput(), ChatOptions.builder().model(request.getModel().getName()).build());
 
         final String response = this.chatClient.prompt(prompt)
-                .advisors(a -> a.param(ChatMemory.DEFAULT_CONVERSATION_ID, request.getChatId()))
+                .advisors(a -> a.param(AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY, request.getChatId()))
                 .call()
                 .content();
 

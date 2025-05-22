@@ -1,3 +1,2 @@
 TODO: 
-- swagger docs
-- chat memory
+- persistent chat memory
