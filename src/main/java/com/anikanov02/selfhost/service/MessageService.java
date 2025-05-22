@@ -59,7 +59,7 @@ public class MessageService {
         final Chat chat = chatService.getById(chatId);
         messageRepository.save(messageMapper.toEntity(dto, chat));
 
-        final MessageBaseDto responseDto = generateResponse(dto.getText(), chat.getModel());
+        final MessageBaseDto responseDto = generateResponse(dto.getText(), chat.getModel(), chatId);
         final Message savedResponse = messageRepository.save(messageMapper.toEntity(responseDto, chat));
         return messageMapper.toDto(savedResponse);
     }
@@ -75,10 +75,11 @@ public class MessageService {
         messageRepository.deleteById(id);
     }
 
-    private MessageBaseDto generateResponse(String request, Model model) {
+    private MessageBaseDto generateResponse(String request, Model model, UUID chatId) {
         return new MessageBaseDto(communicationService.getResponse(ModelRequest
                 .builder()
                         .input(request)
+                        .chatId(chatId)
                         .model(model)
                 .build())
                 .getText());

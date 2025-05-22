@@ -12,7 +12,7 @@ done
 # Load models
 ollama run deepseek-coder:latest
 ollama run deepseek-r1:latest
-ollama run deepseek-v3:latest
+#ollama run deepseek-v3:latest
 
 # Keep container alive
 wait

@@ -22,5 +22,11 @@ management:
       exposure:
         include: health
 
+springdocs:
+  api-docs:
+    path: /swagger/api-doc/swagger
+  swagger-ui:
+    path: /swagger/ui
+
 app:
   frontendBaseUrl: http://localhost:4200
