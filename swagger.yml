@@ -1,10 +1,14 @@
 openapi: 3.0.1
 info:
-  title: OpenAPI definition
-  version: v0
+  title: selfhost
+  description: |
+    Selfhosted AI server
+  version: 1.0-SNAPSHOT
 servers:
 - url: http://localhost:8080
   description: Generated server url
+security:
+- basicAuth: []
 paths:
   /api/v1/users/{id}:
     get:
@@ -434,12 +438,12 @@ components:
     PageMessageDto:
       type: object
       properties:
-        totalPages:
-          type: integer
-          format: int32
         totalElements:
           type: integer
           format: int64
+        totalPages:
+          type: integer
+          format: int32
         size:
           type: integer
           format: int32
@@ -471,18 +475,18 @@ components:
         offset:
           type: integer
           format: int64
+        paged:
+          type: boolean
         sort:
           type: array
           items:
             $ref: "#/components/schemas/SortObject"
-        pageSize:
-          type: integer
-          format: int32
         pageNumber:
           type: integer
           format: int32
-        paged:
-          type: boolean
+        pageSize:
+          type: integer
+          format: int32
         unpaged:
           type: boolean
     SortObject:
@@ -520,12 +524,12 @@ components:
     PageChatDto:
       type: object
       properties:
-        totalPages:
-          type: integer
-          format: int32
         totalElements:
           type: integer
           format: int64
+        totalPages:
+          type: integer
+          format: int32
         size:
           type: integer
           format: int32
@@ -551,3 +555,7 @@ components:
           $ref: "#/components/schemas/PageableObject"
         empty:
           type: boolean
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

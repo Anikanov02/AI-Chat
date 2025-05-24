@@ -5,6 +5,10 @@ import com.anikanov02.selfhost.domain.dto.chat.ChatDto;
 import com.anikanov02.selfhost.domain.dto.chat.ChatsPaginatedRequest;
 import com.anikanov02.selfhost.service.ChatService;
 import com.anikanov02.selfhost.service.UserPermissionService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +19,14 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.UUID;
 
+@SecurityScheme(
+        name = "basicAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "basic"
+)
+@OpenAPIDefinition(
+        security = @SecurityRequirement(name = "basicAuth")
+)
 @RestController
 @RequestMapping("/api/v1/chats")
 @RequiredArgsConstructor

@@ -4,6 +4,10 @@ import com.anikanov02.selfhost.domain.dto.user.UserBaseDto;
 import com.anikanov02.selfhost.domain.dto.user.UserDto;
 import com.anikanov02.selfhost.service.UserPermissionService;
 import com.anikanov02.selfhost.service.UserService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +17,14 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.UUID;
 
+@SecurityScheme(
+        name = "basicAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "basic"
+)
+@OpenAPIDefinition(
+        security = @SecurityRequirement(name = "basicAuth")
+)
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
