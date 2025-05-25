@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class ChatService {
     }
 
     public Page<ChatDto> getChats(ChatsPaginatedRequest request) {
-        final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
+        final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize(), Sort.by("createdAt").descending());
         final UUID userId = userService.getCurrentUser().getId();
 
         final Specification<Chat> spec = (root, query, cb) -> {

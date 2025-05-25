@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class MessageService {
     }
 
     public Page<MessageDto> getMessages(MessagesPaginatedRequest request) {
-        final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
+        final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize(), Sort.by("createdAt").ascending());
 
         final Specification<Message> spec = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
@@ -57,10 +58,10 @@ public class MessageService {
     @Transactional
     public MessageDto createMessage(MessageBaseDto dto, UUID chatId) {
         final Chat chat = chatService.getById(chatId);
-        messageRepository.save(messageMapper.toEntity(dto, chat));
+        messageRepository.save(messageMapper.toEntity(dto, chat, chat.getUser()));
 
         final MessageBaseDto responseDto = generateResponse(dto.getText(), chat.getModel(), chatId);
-        final Message savedResponse = messageRepository.save(messageMapper.toEntity(responseDto, chat));
+        final Message savedResponse = messageRepository.save(messageMapper.toEntity(responseDto, chat, null));
         return messageMapper.toDto(savedResponse);
     }
 

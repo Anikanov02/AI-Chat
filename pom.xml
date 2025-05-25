@@ -21,8 +21,8 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <problem-spring-web.version>0.29.1</problem-spring-web.version>
         <spring-ai.version>1.0.0-M8</spring-ai.version>
-        <springdoc.version>2.4.0</springdoc.version>
-        <openapi-plugin.version>1.4</openapi-plugin.version>
+        <springdoc.version>2.6.0</springdoc.version>
+        <openapi-plugin.version>1.5</openapi-plugin.version>
         <dotenv.version>4.0.0</dotenv.version>
     </properties>
 
