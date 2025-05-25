@@ -191,11 +191,27 @@ paths:
       - message-controller
       operationId: getMessages
       parameters:
-      - name: request
+      - name: chatId
         in: query
         required: true
         schema:
-          $ref: "#/components/schemas/MessagesPaginatedRequest"
+          type: string
+          format: uuid
+      - name: page
+        in: query
+        required: true
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+          format: int32
       responses:
         "200":
           description: OK
@@ -233,11 +249,21 @@ paths:
       - chat-controller
       operationId: getChats
       parameters:
-      - name: request
+      - name: page
         in: query
         required: true
         schema:
-          $ref: "#/components/schemas/ChatsPaginatedRequest"
+          minimum: 0
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+          format: int32
       responses:
         "200":
           description: OK
@@ -404,25 +430,6 @@ components:
           type: string
         password:
           type: string
-    MessagesPaginatedRequest:
-      required:
-      - chatId
-      - page
-      - size
-      type: object
-      properties:
-        page:
-          minimum: 0
-          type: integer
-          format: int32
-        size:
-          maximum: 100
-          minimum: 1
-          type: integer
-          format: int32
-        chatId:
-          type: string
-          format: uuid
     MessageDto:
       required:
       - text
@@ -435,6 +442,8 @@ components:
         id:
           type: string
           format: uuid
+        userMessage:
+          type: boolean
     PageMessageDto:
       type: object
       properties:
@@ -444,6 +453,10 @@ components:
         totalPages:
           type: integer
           format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
         size:
           type: integer
           format: int32
@@ -454,10 +467,6 @@ components:
         number:
           type: integer
           format: int32
-        first:
-          type: boolean
-        last:
-          type: boolean
         numberOfElements:
           type: integer
           format: int32
@@ -475,18 +484,18 @@ components:
         offset:
           type: integer
           format: int64
-        paged:
-          type: boolean
         sort:
           type: array
           items:
             $ref: "#/components/schemas/SortObject"
-        pageNumber:
-          type: integer
-          format: int32
         pageSize:
           type: integer
           format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
         unpaged:
           type: boolean
     SortObject:
@@ -502,25 +511,6 @@ components:
           type: string
         ignoreCase:
           type: boolean
-    ChatsPaginatedRequest:
-      required:
-      - page
-      - size
-      - userId
-      type: object
-      properties:
-        page:
-          minimum: 0
-          type: integer
-          format: int32
-        size:
-          maximum: 100
-          minimum: 1
-          type: integer
-          format: int32
-        userId:
-          type: string
-          format: uuid
     PageChatDto:
       type: object
       properties:
@@ -530,6 +520,10 @@ components:
         totalPages:
           type: integer
           format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
         size:
           type: integer
           format: int32
@@ -540,10 +534,6 @@ components:
         number:
           type: integer
           format: int32
-        first:
-          type: boolean
-        last:
-          type: boolean
         numberOfElements:
           type: integer
           format: int32

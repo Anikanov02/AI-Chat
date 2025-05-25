@@ -17,6 +17,9 @@ public interface MessageMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     Message toEntity(MessageBaseDto dto, Chat chat);
+
+    @Mapping(target = "userMessage", expression = "java(message.getUser() != null)")
     MessageDto toDto(Message message);
+
     void updateMessage(@MappingTarget Message message, MessageBaseDto messageBaseDto);
 }

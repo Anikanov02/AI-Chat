@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class MessageController {
     private final UserPermissionService permissionService;
 
     @GetMapping
-    public ResponseEntity<Page<MessageDto>> getMessages(@Valid MessagesPaginatedRequest request) {
+    public ResponseEntity<Page<MessageDto>> getMessages(@ParameterObject @Valid MessagesPaginatedRequest request) {
         if (permissionService.ownsChat(request.getChatId())) {
             return ResponseEntity.ok(messageService.getMessages(request));
         }

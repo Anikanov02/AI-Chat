@@ -32,13 +32,14 @@ public class ChatService {
 
     public Page<ChatDto> getChats(ChatsPaginatedRequest request) {
         final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
+        final UUID userId = userService.getCurrentUser().getId();
 
         final Specification<Chat> spec = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
 
-            if (request.getUserId() != null) {
+            if (userId != null) {
                 final Join<Chat, User> userJoin = root.join("user");
-                predicate = cb.and(predicate, cb.equal(userJoin.get("id"), request.getUserId()));
+                predicate = cb.and(predicate, cb.equal(userJoin.get("id"), userId));
             }
 
             return predicate;

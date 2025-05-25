@@ -9,4 +9,5 @@ import java.util.UUID;
 @Setter
 public class MessageDto extends MessageBaseDto {
     private UUID id;
+    private boolean userMessage;
 }

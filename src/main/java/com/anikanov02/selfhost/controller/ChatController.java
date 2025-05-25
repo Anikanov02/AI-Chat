@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +36,8 @@ public class ChatController {
     private final UserPermissionService permissionService;
     
     @GetMapping
-    public ResponseEntity<Page<ChatDto>> getChats(@Valid ChatsPaginatedRequest request) {
-        if (permissionService.canModifyUser(request.getUserId())) {
-            return ResponseEntity.ok(chatService.getChats(request));
-        }
-
-        throw new HttpClientErrorException(HttpStatus.FORBIDDEN, "You are not allowed to operate this user");
+    public ResponseEntity<Page<ChatDto>> getChats(@ParameterObject @Valid ChatsPaginatedRequest request) {
+        return ResponseEntity.ok(chatService.getChats(request));
     }
 
     @GetMapping("/{id}")
