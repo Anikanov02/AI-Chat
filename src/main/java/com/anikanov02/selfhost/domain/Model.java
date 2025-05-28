@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Model {
-    DEEPSEEK_CODER("deepseek-coder"),
+    DEEPSEEK_CODER("deepseek-coder-v2"),
     DEEPSEEK_V3("deepseek-v3"),
     DEEPSEEK_R1("deepseek-r1");
 

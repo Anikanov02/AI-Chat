@@ -10,7 +10,7 @@ until curl -s http://localhost:11434/version >/dev/null; do
 done
 
 # Load models
-ollama run deepseek-coder:latest
+ollama run deepseek-coder-v2:latest
 ollama run deepseek-r1:latest
 #ollama run deepseek-v3:latest
 
